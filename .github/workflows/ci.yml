@@ -16,7 +16,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  release%:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -32,6 +32,14 @@ jobs:
 
       - name: Install Helm
         uses: azure/setup-helm@v3
+
+      - name: Packaging
+        run: |
+          VERSION=${{ github.ref_name }}
+          echo "VERSION=${VERSION:1}" >> $GITHUB_ENV
+          rm -rf .cr-release-packages
+          mkdir -p .cr-release-packages
+          # helm package charts/hello-world --app-version=$GITHUB_ENV --version=$GITHUB_ENV --destination=
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.5.0
