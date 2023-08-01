@@ -39,8 +39,7 @@ jobs:
           rm -rf .cr-release-packages
           mkdir -p .cr-release-packages
           helm package charts/hello-world
-          ls
       - name: Push Chart
         run: |
-          echo "${{ secrets.PRIVATE_ACCESS_TOKEN }}" | helm registry login ghcr.io/seungmlee --username seungmlee --password-stdin
+          echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ghcr.io -u $ --password-stdin
           helm push hello-world-0.1.1.tgz oci://ghcr.io/seungmlee
