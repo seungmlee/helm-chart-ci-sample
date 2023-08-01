@@ -43,5 +43,5 @@ jobs:
           helm package charts/hello-world
       - name: Push Chart
         run: |
-          echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ghcr.io -u $ --password-stdin
-          helm push hello-world-0.1.1.tgz oci://ghcr.io/seungmlee
+          echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ghcr.io --password-stdin
+          helm push hello-world-0.1.1.tgz oci://ghcr.io/${{ github.repository_owner }}
