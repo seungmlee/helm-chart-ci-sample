@@ -34,15 +34,12 @@ jobs:
       - name: Install Helm
         uses: azure/setup-helm@v3
 
-      # - name: Packaging
-      #   run: |
-      #     # VERSION=${{ github.ref_name }}
-      #     # echo "VERSION=${VERSION:1}" >> $GITHUB_ENV
-      #     rm -rf .cr-release-packages
-      #     mkdir -p .cr-release-packages
-      #     # helm package charts/hello-world --app-version=$GITHUB_ENV --version=$GITHUB_ENV --destination=.cr-release-packages
-      #     helm package charts/hello-world
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.5.0
-        env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Package Chart
+        run: |
+          rm -rf .cr-release-packages
+          mkdir -p .cr-release-packages
+          helm package charts/hello-world
+      - name: Push Chart
+        run: |
+          helm registry login --password "${{ secrets.GITHUB_TOKEN }}"
+          helm push hello-world-0.1.0.tgz oci://ghcr.io/seungmlee
