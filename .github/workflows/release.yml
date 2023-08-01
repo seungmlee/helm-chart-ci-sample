@@ -43,4 +43,4 @@ jobs:
       - name: Push Chart
         run: |
           echo "${{ secrets.PRIVATE_ACCESS_TOKEN }}" | helm registry login ghcr.io/seungmlee --username seungmlee --password-stdin
-          helm push hello-world-0.1.0.tgz oci://ghcr.io/seungmlee
+          helm push hello-world-0.1.1.tgz oci://ghcr.io/seungmlee
